@@ -4,8 +4,8 @@ defmodule QuantumRedlock.Jobs.Foo do
   use QuantumRedlock.Job
 
   @impl QuantumRedlock.Job
-  def run_mult_fn(args) do
-    IO.inspect(args, label: "RUN MULT")
+  def run_mult_fn(_) do
+    IO.inspect(Node.self(), label: "RUN MULT")
 
     :ok
   end
@@ -14,7 +14,7 @@ defmodule QuantumRedlock.Jobs.Foo do
   def run_once_fn(_) do
     IO.puts("RUNNING ONCE STARTED")
 
-    :timer.sleep(3_000)
+    :rand.uniform(5) |> Kernel.*(1_000) |> :timer.sleep()
 
     IO.puts("RUNNING ONCE ENDED")
 
