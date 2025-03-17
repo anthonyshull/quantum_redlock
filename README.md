@@ -24,9 +24,13 @@ We want to be able to run jobs one of two ways:
 1. On one and only one node. E.g., we might want to run Algolia re-indexing on one and only one node every hour.
 2. On each and every node. E.g., we might want to clear the local cache on every node every night.
 
+**Limitations and Alternatives**
+
 Our nodes are not clustered; they don't know about each other.
-Because we don't have a relational database can't use Oban.
-We do have Redis, but it runs in cluster mode and Flume doesn't support cluster mode.
+
+Because we don't have a relational database we can't use [Oban](https://hexdocs.pm/oban/Oban.html).
+
+We do have Redis, but it runs in cluster mode and [Flume](https://github.com/scripbox/flume) doesn't support cluster mode.
 
 **Annoying Bits**
 
