@@ -14,6 +14,8 @@ defmodule QuantumRedlock.Jobs.Foo do
 
   @impl QuantumRedlock.Job
   def run_once_fn(_) do
+    :timer.sleep(1000)
+
     Logger.info("RUN ONCE")
 
     :ok
