@@ -1,22 +1,22 @@
 defmodule QuantumRedlock.Jobs.Foo do
   @moduledoc false
 
+  require Logger
+
   use QuantumRedlock.Job
 
   @impl QuantumRedlock.Job
   def run_mult_fn(_) do
-    IO.inspect(Node.self(), label: "RUN MULT")
+    Logger.info("RUN MULT")
 
     :ok
   end
 
   @impl QuantumRedlock.Job
   def run_once_fn(_) do
-    IO.puts("RUNNING ONCE STARTED")
+    :timer.sleep(1000)
 
-    :rand.uniform(5) |> Kernel.*(1_000) |> :timer.sleep()
-
-    IO.puts("RUNNING ONCE ENDED")
+    Logger.info("RUN ONCE")
 
     :ok
   end
