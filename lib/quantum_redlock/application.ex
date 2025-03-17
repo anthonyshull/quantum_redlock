@@ -5,14 +5,24 @@ defmodule QuantumRedlock.Application do
 
   @impl Application
   def start(_type, _args) do
+    topologies = [
+      quantum_redlock: [
+        strategy: Cluster.Strategy.Gossip
+      ]
+    ]
+
     children = [
-      QuantumRedlock.Scheduler,
+      {
+        Cluster.Supervisor,
+        [topologies, [name: QuantumRedlock.ClusterSupervisor]]
+      },
       {
         RedisMutex,
         name: QuantumRedlock.RedisMutex,
         host: Application.get_env(:quantum_redlock, :redis_host),
         port: Application.get_env(:quantum_redlock, :redis_port)
-      }
+      },
+      QuantumRedlock.Scheduler
     ]
 
     opts = [strategy: :one_for_one, name: QuantumRedlock.Supervisor]

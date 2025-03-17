@@ -24,7 +24,8 @@ defmodule QuantumRedlock.MixProject do
     [
       {:libcluster, "3.5.0"},
       {:quantum, "3.5.3"},
-      {:quantum_storage_redis, git: "https://github.com/senconscious/quantum_storage_redis", branch: "main"},
+      {:quantum_storage_redis,
+       git: "https://github.com/senconscious/quantum_storage_redis", branch: "main"},
       {:redis_mutex, "1.1.0"}
     ]
   end

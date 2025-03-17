@@ -25,24 +25,30 @@ defmodule QuantumRedlock.Job do
       def run_once(args) do
         try do
           RedisMutex.with_lock(
-            key(),
+            key(args),
             fn -> run_once_fn(args) end,
             @mutex_options
           )
-        rescue e in [RedisMutex.Error] ->
-          Logger.debug("#{__MODULE__}: could not obtain lock")
+        rescue
+          e in [RedisMutex.Error] ->
+            Logger.debug("#{__MODULE__}: could not obtain lock")
 
-          {:error, e}
+            {:error, e}
         end
       end
 
-      defp key() do
-        __MODULE__
-        |> Module.split()
-        |> Kernel.tl()
-        |> Enum.join(".")
-        |> :erlang.phash2()
-        |> Integer.to_string()
+      defp key(args) do
+        args_hash = :erlang.phash2(args) |> Integer.to_string()
+
+        func_hash =
+          __MODULE__
+          |> Module.split()
+          |> Kernel.tl()
+          |> Enum.join(".")
+          |> :erlang.phash2()
+          |> Integer.to_string()
+
+        [func_hash, args_hash] |> Enum.join(":")
       end
     end
   end
