@@ -30,7 +30,7 @@ defmodule QuantumRedlock.Job do
             @mutex_options
           )
         rescue e in [RedisMutex.Error] ->
-          Logger.debug("#{__MODULE__}: could not obtain lock")
+          Logger.warning("#{__MODULE__}: could not obtain lock")
 
           {:error, e}
         end

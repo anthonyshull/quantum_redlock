@@ -10,9 +10,11 @@ Run one or more nodes:
 ...
 ```
 
-Two jobs are set to run every minute.
-The first job is set to run on multiple nodes. You'll see output for each running node.
-The second job is set to run only on one node. You'll see output on one node and the others will have a debug statement saying they couldn't get a lock.
+Three jobs are set to run every minute.
+The first job is set to run on multiple nodes.
+You'll see output for each running node.
+The other two jobs are set to run only on one node.
+You'll see output on one node and the others will have a debug statement saying they couldn't get a lock.
 
 **Requirements**
 

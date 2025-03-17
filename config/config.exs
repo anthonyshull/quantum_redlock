@@ -4,6 +4,10 @@ config :logger, level: :info
 
 config :quantum_redlock, QuantumRedlock.Scheduler,
   jobs: [
+    run_mult: [
+      schedule: "* * * * *",
+      task: {QuantumRedlock.Jobs.Foo, :run_mult, [nil]}
+    ],
     run_once_a: [
       schedule: {:extended, "*/5"},
       task: {QuantumRedlock.Jobs.Foo, :run_once, ["a"]}
