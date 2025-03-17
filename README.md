@@ -14,6 +14,15 @@ Two jobs are set to run every minute.
 The first job is set to run on multiple nodes. You'll see output for each running node.
 The second job is set to run only on one node. You'll see output on one node and the others will have a debug statement saying they couldn't get a lock.
 
+**Requirements**
+
+We want a simple way to run *scheduled* jobs written in Elixir.
+We want to be able to run jobs one of two ways: on one and only one node or on each and every node.
+
+Our nodes are not clustered; they don't know about each other.
+Because we don't have a relational database can't use Oban.
+We do have Redis, but it runs in cluster mode and Flume doesn't support cluster mode.
+
 **Annoying Bits**
 
 Because we wrap a job in a behaviour, we have to pass in all arguments to the function as an array.
@@ -38,4 +47,5 @@ This is probably due to timing conditions holding across runs.
 I.e., if node X gets the lock on run Y because its clock is faster, it will most likely get the lock on run Z.
 
 One way to mitigate this would be distribute jobs across nodes.
-But, that would entail running distributed Elixir; if we are going to do that, we would be better off using a real job runner.
+But, that would entail running distributed Elixir.
+Quantum does have a way to run jobs on a random node, but you would still need some kind of lock to prevent multiple runs.
